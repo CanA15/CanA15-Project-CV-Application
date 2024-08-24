@@ -197,7 +197,7 @@ function App() {
       <div className="output">
         <h1>Your Resume</h1>
         <div className="cv-output">
-          <div className="personal-output">
+          <div className="personalOutput">
             <h3>Personal Info</h3>
             <p>
               {person.firstName} {person.lastName}
@@ -205,7 +205,7 @@ function App() {
             <p>{person.email}</p>
             <p>{person.phone}</p>
           </div>
-          <div className="education-output">
+          <div className="educationOutput">
             <h3>Education</h3>
             {education.map((edu) => (
               <div key={edu.id}>
@@ -219,7 +219,7 @@ function App() {
               </div>
             ))}
           </div>
-          <div className="experience-output">
+          <div className="experienceOutput">
             <h3>Experience</h3>
             {experience.map((exp) => (
               <div key={exp.id}>
