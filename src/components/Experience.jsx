@@ -1,115 +1,65 @@
-import { useState } from "react";
-
-export default function ExperienceInformation() {
-  const [experience, setExperience] = useState([]);
-  const [companyName, setCompanyName] = useState("");
-  const [positionTitle, setPositionTitle] = useState("");
-  const [positionDescription, setPositionDescription] = useState("");
-  const [positionStartDate, setPositionStartDate] = useState("");
-  const [positionEndDate, setPositionEndDate] = useState("");
-  const [positionLocation, setPositionLocation] = useState("");
-
-  function handleCompanyNameChange(e) {
-    setCompanyName(e.target.value);
-  }
-
-  function handlePositionTitleChange(e) {
-    setPositionTitle(e.target.value);
-  }
-
-  function handlePositionDescriptionChange(e) {
-    setPositionDescription(e.target.value);
-  }
-
-  function handlePositionStartDateChange(e) {
-    setPositionStartDate(e.target.value);
-  }
-  function handlePositionEndDateChange(e) {
-    setPositionEndDate(e.target.value);
-  }
-  function handlePositionLocationChange(e) {
-    setPositionLocation(e.target.value);
-  }
-  function handleAddExperience() {
-    setExperience([
-      ...experience,
-      {
-        companyName,
-        positionTitle,
-        positionDescription,
-        positionStartDate,
-        positionEndDate,
-        positionLocation,
-      },
-    ]);
-    setCompanyName("");
-    setPositionTitle("");
-    setPositionDescription("");
-    setPositionStartDate("");
-    setPositionEndDate("");
-    setPositionLocation("");
-  }
-  function handleRemoveExperience(index) {
-    setExperience(experience.filter((_, i) => i !== index));
-  }
-
+export default function ExperienceInformation({
+  experience,
+  onExperienceChange,
+  onRemoveExperience,
+  onClearFirstExperience,
+}) {
   return (
-    <>
-      <h2>Experience</h2>
-      <label>
-        Company:{" "}
-        <input value={companyName} onChange={handleCompanyNameChange} />
-      </label>
-      <label>
-        Position:{" "}
-        <input value={positionTitle} onChange={handlePositionTitleChange} />
-      </label>
-      <label>
-        Description:{" "}
-        <input
-          value={positionDescription}
-          onChange={handlePositionDescriptionChange}
-        />
-      </label>
-      <label>
-        Start Date:{" "}
-        <input
-          value={positionStartDate}
-          onChange={handlePositionStartDateChange}
-        />
-      </label>
-      <label>
-        End Date:{" "}
-        <input value={positionEndDate} onChange={handlePositionEndDateChange} />
-      </label>
-      <label>
-        Location{" "}
-        <input
-          value={positionLocation}
-          onChange={handlePositionLocationChange}
-        />
-      </label>
-      <button type="submit" onClick={handleAddExperience}>
-        Add Education
-      </button>
-
-      <div>
-        {experience.map((edu, index) => (
-          <div key={index}>
-            <p>{edu.positionTitle + " "}</p>{" "}
-            <p>{edu.positionDescription + " "}</p>
-            <p>
-              {edu.positionStartDate} - {edu.positionEndDate}
-            </p>
-            <p>{edu.positionLocation}</p>
-            <p>
-              <button onClick={() => handleRemoveExperience(index)}>
-                Remove
-              </button>
-            </p>
-          </div>
-        ))}
-      </div>
-    </>
+    <div className="experienceInput">
+      {experience.map((exp, index) => (
+        <div key={exp.id}>
+          <input
+            type="text"
+            name="companyName"
+            value={exp.companyName}
+            onChange={(e) =>
+              onExperienceChange(exp.id, "companyName", e.target.value)
+            }
+            placeholder="Your Company"
+          ></input>
+          <input
+            type="text"
+            name="positionTitle"
+            value={exp.positionTitle}
+            onChange={(e) =>
+              onExperienceChange(exp.id, "positionTitle", e.target.value)
+            }
+            placeholder="Your Position"
+          ></input>
+          <input
+            type="text"
+            name="mainResponsibilites"
+            value={exp.mainResponsibilites}
+            onChange={(e) =>
+              onExperienceChange(exp.id, "mainResponsibilites", e.target.value)
+            }
+            placeholder="Job Responsibilites / Description"
+          ></input>
+          <input
+            type="text"
+            name="workStart"
+            value={exp.workStart}
+            onChange={(e) =>
+              onExperienceChange(exp.id, "workStart", e.target.value)
+            }
+            placeholder="Position Start Date"
+          ></input>
+          <input
+            type="text"
+            name="workEnd"
+            value={exp.workEnd}
+            onChange={(e) =>
+              onExperienceChange(exp.id, "workEnd", e.target.value)
+            }
+            placeholder="Position End Date"
+          ></input>
+          {index === 0 ? (
+            <button onClick={onClearFirstExperience}>Clear</button>
+          ) : (
+            <button onClick={() => onRemoveExperience(exp.id)}>Remove</button>
+          )}{" "}
+        </div>
+      ))}
+    </div>
   );
 }
